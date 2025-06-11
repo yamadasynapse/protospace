@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
   <meta charset="UTF-8">
   <title>ProtoSpace</title>
@@ -7,12 +7,32 @@
 </head>
 <body>
 
-  <!-- ヘッダーの読み込み -->
-<div th:replace="questions/header :: header"></div>
+  <!-- ヘッダーの読み込み (ThymeleafのDeprecated警告修正済みと仮定) -->
+  <div th:replace="~{questions/header :: header}"></div>
 
   <!-- メインコンテンツ -->
   <main class="main">
     <div class="inner">
+      <!-- ログイン状態の場合に表示するコンテンツ -->
+      <div sec:authorize="isAuthenticated()">
+        <!-- ログイン状態では「こんにちは、〇〇さん」と表示 -->
+        <p>こんにちは、<span sec:authentication="principal.userName"></span>さん</p>
+        <!-- ここには「ユーザーリスト」は表示しない -->
+      </div>
+
+      <!-- ログアウト状態の場合に表示するコンテンツ -->
+      <div sec:authorize="isAnonymous()">
+        <!-- ログインしていない場合は「何も表示しない」という要件なので、このブロックは空にする -->
+        <!-- もし何かメッセージ（例: 「ログインしてProtoSpaceの世界を楽しみましょう！」）を表示したい場合はここに記述 -->
+      </div>
+
+      <!-- ★★重要★★:
+           もともとユーザーカード（Prototypes）を表示していた以下の部分（`card_wrapper` div）は、
+           ログイン状態でもログアウト状態でも「不要」というご要望なので、このHTMLファイルから削除します。
+           もし、プロトタイプ一覧を別のページ（例: `/prototypes`）で表示する予定があるなら、
+           そのページで `card_wrapper` のコードを再利用してください。
+      -->
+      <!--
       <div class="card_wrapper flex">
         <div class="card" th:each="user : ${users}">
           <a th:href="@{/prototypes/{id}(id=${user.id})}">
@@ -25,6 +45,8 @@
           </div>
         </div>
       </div>
+      -->
+
     </div>
   </main>
 
