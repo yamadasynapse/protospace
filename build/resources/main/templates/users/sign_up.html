@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>ProtoSpace</title>
+</head>
+<body>
+<div th:replace="~{questions/header :: header}"></div> 
+<div class="form_wrapper">
+  <h2 class="form_title">ユーザー新規登録</h2>
+
+  <form th:action="@{/signup}" method="post" th:object="${user}">
+      <div class="form_field">
+          <label>メールアドレス</label>
+          <input type="email" th:field="*{email}" />
+      </div>
+
+      <div class="form_field">
+          <label>パスワード</label>
+          <input type="password" th:field="*{password}" />
+      </div>
+
+      <div class="form_field">
+          <label>パスワード再入力</label>
+          <input type="password" th:field="*{passwordConfirmation}" />
+      </div>
+
+      <div class="form_field">
+          <label>ユーザー名</label>
+          <input type="text" th:field="*{name}" />
+      </div>
+
+      <div class="form_field">
+          <label>プロフィール</label>
+          <textarea th:field="*{profile}"></textarea>
+      </div>
+
+      <div class="form_field">
+          <label>所属</label>
+          <textarea th:field="*{affiliation}"></textarea>
+      </div>
+
+      <div class="form_field">
+          <label>役職</label>
+          <textarea th:field="*{position}"></textarea>
+      </div>
+
+      <div class="form_actions">
+          <button type="submit" class="form_btn">新規登録</button>
+      </div>
+  </form>
+</div>
+
+</body>
+</html>
