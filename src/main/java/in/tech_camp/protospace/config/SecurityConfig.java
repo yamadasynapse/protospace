@@ -56,15 +56,14 @@ public class SecurityConfig {
             .formLogin(login -> login
                 .loginPage("/users/sign_in")
                 .loginProcessingUrl("/users/sign_in")
-
-                .defaultSuccessUrl("/")
-
+                .defaultSuccessUrl("/", true)
                 .failureUrl("/users/sign_in?error")
                 .usernameParameter("email")
                 .passwordParameter("password")
             )
            .logout(logout -> logout
                 .logoutRequestMatcher(new AntPathRequestMatcher("/logout", "POST"))
+                // .logoutSuccessUrl("/", true) // 修正前
                 .logoutSuccessUrl("/") // ★修正後: `true` を削除
                 .invalidateHttpSession(true)
                 .deleteCookies("JSESSIONID")
