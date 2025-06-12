@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+  <meta charset="UTF-8">
+  <title>ProtoSpace</title>
+  <link rel="stylesheet" th:href="@{/assets/application.css}" />
+</head>
+<body>
+
+
+  <div th:replace="~{questions/header :: header}"></div>
+
+  <!-- メインコンテンツ -->
+  <main class="main">
+    <div class="inner">
+      <!-- ログイン状態の場合に表示するコンテンツ -->
+      <div sec:authorize="isAuthenticated()">
+        <!-- ログイン状態では「こんにちは、〇〇さん」と表示 -->
+        <p>こんにちは、<span sec:authentication="principal.userName"></span>さん</p>
+        <!-- ここには「ユーザーリスト」は表示しない -->
+      </div>
+
+      <!-- ログアウト状態の場合に表示するコンテンツ -->
+      <div sec:authorize="isAnonymous()">
+        <!-- ログインしていない場合は「何も表示しない」という要件なので、このブロックは空にする -->
+        <!-- もし何かメッセージ（例: 「ログインしてProtoSpaceの世界を楽しみましょう！」）を表示したい場合はここに記述 -->
+      </div>
+
+      <!-- ★★重要★★:
+           もともとユーザーカード（Prototypes）を表示していた以下の部分（`card_wrapper` div）は、
+           ログイン状態でもログアウト状態でも「不要」というご要望なので、このHTMLファイルから削除します。
+           もし、プロトタイプ一覧を別のページ（例: `/prototypes`）で表示する予定があるなら、
+           そのページで `card_wrapper` のコードを再利用してください。
+      -->
+      <!--
+      <div class="card_wrapper flex">
+        <div class="card" th:each="user : ${users}">
+          <a th:href="@{/prototypes/{id}(id=${user.id})}">
+            <img class="card_img" th:src="@{/images/sample.jpg}" alt="Sample Image">
+          </a>
+          <div class="card_body">
+            <a class="card_title" th:href="@{/prototypes/{id}(id=${user.id})}" th:text="${user.profile}"></a>
+            <p class="card_summary" th:text="${user.affiliation}"></p>
+            <a class="card_user" th:href="@{/users/{id}(id=${user.id})}" th:text="'by ' + ${user.email}"></a>
+          </div>
+        </div>
+      </div>
+      -->
+
+    </div>
+  </main>
+
+  <!-- フッター -->
+  <footer class="footer">
+    <p class="copyright">Copyright © PROTO SPACE All rights reserved.</p>
+  </footer>
+
+</body>
+</html>
