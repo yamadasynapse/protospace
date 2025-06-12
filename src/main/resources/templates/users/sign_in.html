@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <title>ログイン</title>
     <link rel="stylesheet" th:href="@{/assets/application.css}" />
-  
+
 </head>
 <body>
     <!-- ヘッダーの読み込み (後述の修正を適用後) -->
@@ -17,10 +17,7 @@
         <div th:if="${param.error}" class="error-message">
             メールアドレスまたはパスワードが正しくありません。
         </div>
-        <!-- ログアウト成功メッセージ (Spring Securityがパラメーター 'logout' を追加) -->
-        <div th:if="${param.logout}" class="info-message">
-            ログアウトしました。
-        </div>
+
 
         <!-- Spring Securityが処理するログインフォーム -->
         <form th:action="@{/users/sign_in}" method="post">
@@ -36,12 +33,7 @@
             <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
             <button type="submit">ログイン</button>
         </form>
-
-        <p style="text-align: center; margin-top: 20px;">
-            <a th:href="@{/users/sign_up}">新規登録はこちら</a>
-        </p>
-    </div>
-
+        
     <footer class="footer">
         <p class="copyright">Copyright © PROTO SPACE All rights reserved.</p>
     </footer>
